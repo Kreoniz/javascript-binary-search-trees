@@ -21,7 +21,7 @@ class Tree {
 
     const root = new Node(filtered[mid]);
     root.left = this.buildTree(filtered.slice(0, mid));
-    root.right = this.buildTree(filtered.slice(mid + 1, filtered.length - 1));
+    root.right = this.buildTree(filtered.slice(mid + 1, filtered.length));
     
     return root;
   }
@@ -43,6 +43,4 @@ const tree = new Tree(array);
    }
  };
 
-console.log(tree.buildTree(array));
-console.log();
 prettyPrint(tree.buildTree(array));
