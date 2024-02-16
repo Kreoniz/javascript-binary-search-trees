@@ -25,10 +25,39 @@ class Tree {
     
     return root;
   }
-}
 
-const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const tree = new Tree(array);
+  insert(value) {
+    const node = new Node(value);
+
+    if (this.root === null) {
+      this.root = node;
+      return;
+    }
+
+    let tmp = this.root;
+    let prev = null;
+    while (tmp !== null) {
+      if (value > tmp.data) {
+        prev = tmp;
+        tmp = tmp.right;
+      } else if (value < tmp.data) {
+        prev = tmp;
+        tmp = tmp.left;
+      } else if (value === tmp.data) {
+        return;
+      }
+    }
+
+    if (value > prev.data) {
+      prev.right = node;
+    } else {
+      prev.left = node;
+    }
+  }
+
+  delete(value) {
+  }
+}
 
  const prettyPrint = (node, prefix = "", isLeft = true) => {
    if (node === null) {
@@ -43,4 +72,10 @@ const tree = new Tree(array);
    }
  };
 
-prettyPrint(tree.buildTree(array));
+
+const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
+prettyPrint(tree.root);
+tree.insert(11);
+console.log('Number inserted:');
+prettyPrint(tree.root);
