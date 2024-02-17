@@ -124,6 +124,29 @@ class Tree {
 
     return tmp;
   }
+
+  levelOrder(callback) {
+    const queue = [this.root];
+
+    while (queue.length > 0) {
+      const tmp = queue.shift();
+      if (tmp.left) {
+        queue.push(tmp.left);
+      }
+      if (tmp.right) {
+        queue.push(tmp.right);
+      }
+
+      callback(tmp);
+    }
+  }
+
+  levelOrderRecursive(callback, node=this.root) {
+    if (node === null) return;
+    callback(node);
+    this.levelOrderRecursive(callback, node.left);
+    this.levelOrderRecursive(callback, node.right);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -154,4 +177,19 @@ console.log('Number deleted:');
 prettyPrint(tree.root);
 
 console.log();
+console.log('Number found:');
 console.log(tree.find(23));
+
+console.log();
+console.log('Each value multiplied');
+tree.levelOrder((node) => {
+  node.data = node.data * 2;
+});
+prettyPrint(tree.root);
+
+console.log();
+console.log('Each value divided (recursively)');
+tree.levelOrderRecursive((node) => {
+  node.data = node.data / 2;
+});
+prettyPrint(tree.root);
