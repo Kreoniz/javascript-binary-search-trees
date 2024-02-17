@@ -56,26 +56,86 @@ class Tree {
   }
 
   delete(value) {
+    let tmp = this.root;
+    let prev = null;
+
+    while (tmp !== null && tmp.data !== value) {
+      prev = tmp;
+      if (value > tmp.data) {
+        tmp = tmp.right;
+      } else if (value < tmp.data) {
+        tmp = tmp.left;
+      }
+    }
+
+    if (tmp === null) {
+      return;
+    }
+
+    else if (tmp.left === null || tmp.right === null) {
+      let newTmp;
+
+      if (tmp.left === null) {
+        newTmp = tmp.right;
+      } else if (tmp.right === null) {
+        newTmp = tmp.left;
+      }
+
+      if (tmp === prev.left) {
+        prev.left = newTmp;
+      } else {
+        prev.right = newTmp;
+      }
+
+      tmp = null;
+    }
+
+    else {
+      let succ = tmp.right;
+      let succPrev = tmp;
+      while (succ.left !== null) {
+        succPrev = succ;
+        succ = succ.left;
+      }
+
+      succPrev.left = succ.right;
+      succ.left = tmp.left;
+      succ.right = tmp.right;
+
+      if (prev === null) {
+        this.root = succ;
+      } else if (tmp === prev.right) {
+        prev.right = succ;
+      } else if (tmp === prev.left) {
+        prev.left = succ;
+      }
+    }
   }
 }
 
- const prettyPrint = (node, prefix = "", isLeft = true) => {
-   if (node === null) {
-     return;
-   }
-   if (node.right !== null) {
-     prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-   }
-   console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-   if (node.left !== null) {
-     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-   }
- };
-
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 prettyPrint(tree.root);
-tree.insert(11);
+
+tree.insert(21);
+console.log();
 console.log('Number inserted:');
+prettyPrint(tree.root);
+
+tree.delete(8);
+console.log();
+console.log('Number deleted:');
 prettyPrint(tree.root);
