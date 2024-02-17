@@ -143,9 +143,50 @@ class Tree {
 
   levelOrderRecursive(callback, node=this.root) {
     if (node === null) return;
-    callback(node);
     this.levelOrderRecursive(callback, node.left);
+    callback(node);
     this.levelOrderRecursive(callback, node.right);
+
+    return callback;
+  }
+
+  inOrder(callback=[], node=this.root) {
+    if (node === null) return;
+    this.inOrder(callback, node.left);
+    if (Array.isArray(callback)) {
+      callback.push(node.data);
+    } else {
+      callback(node);
+    }
+    this.inOrder(callback, node.right);
+
+    return callback;
+  }
+
+  preOrder(callback=[], node=this.root) {
+    if (node === null) return;
+    if (Array.isArray(callback)) {
+      callback.push(node.data);
+    } else {
+      callback(node);
+    }
+    this.preOrder(callback, node.left);
+    this.preOrder(callback, node.right);
+
+    return callback;
+  }
+
+  postOrder(callback=[], node=this.root) {
+    if (node === null) return;
+    this.postOrder(callback, node.left);
+    this.postOrder(callback, node.right);
+    if (Array.isArray(callback)) {
+      callback.push(node.data);
+    } else {
+      callback(node);
+    }
+
+    return callback;
   }
 }
 
@@ -193,3 +234,10 @@ tree.levelOrderRecursive((node) => {
   node.data = node.data / 2;
 });
 prettyPrint(tree.root);
+
+console.log();
+console.log('Preorder:', tree.preOrder());
+console.log();
+console.log('Inorder:', tree.inOrder());
+console.log();
+console.log('Postorder:', tree.postOrder());
