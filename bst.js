@@ -111,6 +111,19 @@ class Tree {
       }
     }
   }
+
+  find(value) {
+    let tmp = this.root;
+    while (tmp !== null && tmp.data !== value) {
+      if (value > tmp.data) {
+        tmp = tmp.right;
+      } else if (value < tmp.data) {
+        tmp = tmp.left;
+      }
+    }
+
+    return tmp;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -139,3 +152,6 @@ tree.delete(8);
 console.log();
 console.log('Number deleted:');
 prettyPrint(tree.root);
+
+console.log();
+console.log(tree.find(23));
