@@ -188,6 +188,30 @@ class Tree {
 
     return callback;
   }
+
+  height(node) {
+    let queue = [node];
+    let count = -1;
+
+    while (queue.length > 0) {
+      const queueCopy = queue.slice();
+      queue = [];
+
+      while (queueCopy.length > 0) {
+        const tmp = queueCopy.shift();
+        if (tmp.left) {
+          queue.push(tmp.left);
+        }
+        if (tmp.right) {
+          queue.push(tmp.right);
+        }
+      }
+
+      count++;
+    }
+
+    return count;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -241,3 +265,6 @@ console.log();
 console.log('Inorder:', tree.inOrder());
 console.log();
 console.log('Postorder:', tree.postOrder());
+
+console.log();
+console.log('Height:', tree.height(tree.root));
