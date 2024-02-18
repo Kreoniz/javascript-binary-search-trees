@@ -264,6 +264,11 @@ class Tree {
 
     return true;
   }
+
+  rebalance() {
+    const array = this.inOrder();
+    this.root = this.buildTree(array);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -325,4 +330,5 @@ console.log();
 console.log('Depth:', tree.depth(tree.find(1)));
 
 console.log();
+prettyPrint(tree.root);
 console.log('Is balanced?', tree.isBalanced());
