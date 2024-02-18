@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class Tree {
+export default class Tree {
   constructor(array) {
     this.root = this.buildTree(array);
   }
@@ -271,7 +271,7 @@ class Tree {
   }
 }
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
+export const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
   }
@@ -283,52 +283,3 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
-
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-
-prettyPrint(tree.root);
-
-tree.insert(21);
-console.log();
-console.log('Number inserted:');
-prettyPrint(tree.root);
-
-tree.delete(8);
-console.log();
-console.log('Number deleted:');
-prettyPrint(tree.root);
-
-console.log();
-console.log('Number found:');
-console.log(tree.find(23));
-
-console.log();
-console.log('Each value multiplied');
-tree.levelOrder((node) => {
-  node.data = node.data * 2;
-});
-prettyPrint(tree.root);
-
-console.log();
-console.log('Each value divided (recursively)');
-tree.levelOrderRecursive((node) => {
-  node.data = node.data / 2;
-});
-prettyPrint(tree.root);
-
-console.log();
-console.log('Preorder:', tree.preOrder());
-console.log();
-console.log('Inorder:', tree.inOrder());
-console.log();
-console.log('Postorder:', tree.postOrder());
-
-console.log();
-console.log('Height:', tree.height(tree.root));
-
-console.log();
-console.log('Depth:', tree.depth(tree.find(1)));
-
-console.log();
-prettyPrint(tree.root);
-console.log('Is balanced?', tree.isBalanced());
