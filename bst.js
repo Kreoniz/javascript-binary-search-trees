@@ -239,6 +239,31 @@ class Tree {
 
     return -1;
   }
+
+  isBalanced() {
+    let queue = [this.root];
+
+    while (queue.length > 0) {
+      let tmp = queue.shift();
+
+      let lHeight = 0;
+      let rHeight = 0;
+      
+      if (tmp.left) {
+        lHeight = this.height(tmp.left);
+        queue.push(tmp.left);
+      }
+      if (tmp.right) {
+        rHeight = this.height(tmp.right);
+        queue.push(tmp.right);
+      }
+      if (Math.abs(lHeight - rHeight) > 1) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -298,3 +323,6 @@ console.log('Height:', tree.height(tree.root));
 
 console.log();
 console.log('Depth:', tree.depth(tree.find(1)));
+
+console.log();
+console.log('Is balanced?', tree.isBalanced());
