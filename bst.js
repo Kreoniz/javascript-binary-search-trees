@@ -137,7 +137,9 @@ export default class Tree {
         queue.push(tmp.right);
       }
 
-      callback(tmp);
+      if (callback) {
+        callback(tmp);
+      }
     }
   }
 
